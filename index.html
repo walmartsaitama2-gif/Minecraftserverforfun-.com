@@ -1,214 +1,761 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>A Fun Minecraft Server!</title>
+    <!-- Change your server name here -->
+    <title>A fun Minecraft server</title>
 
     <style>
+        /* =========================
+           BASIC RESET
+        ========================== */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            min-height: 100vh;
-            background:
-                linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.8)),
-                radial-gradient(circle at top, #263b27, #0b0f0c 70%);
+            font-family: Arial, Helvetica, sans-serif;
             color: white;
+            background: #050806;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* =========================
+           ANIMATED BACKGROUND
+        ========================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+
+            background:
+                radial-gradient(circle at 50% 0%,
+                    rgba(40, 130, 55, 0.25),
+                    transparent 45%),
+                radial-gradient(circle at 10% 80%,
+                    rgba(20, 100, 40, 0.12),
+                    transparent 35%),
+                linear-gradient(
+                    180deg,
+                    #08110a 0%,
+                    #050806 55%,
+                    #020302 100%
+                );
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+
+            background-image:
+                radial-gradient(circle, rgba(100, 255, 120, 0.35) 1px, transparent 1px);
+
+            background-size: 70px 70px;
+
+            animation: particles 18s linear infinite;
+
+            opacity: 0.25;
+        }
+
+        @keyframes particles {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 700px;
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
 
         nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
             width: 100%;
-            padding: 20px 8%;
+            padding: 18px 7%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.35);
+
+            background: rgba(3, 7, 4, 0.78);
+            backdrop-filter: blur(15px);
+
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            margin-right: 7px;
         }
 
         .logo span {
             color: #55ff55;
+            text-shadow: 0 0 15px rgba(85, 255, 85, 0.35);
         }
 
         nav a {
-            color: #ddd;
+            position: relative;
+
+            color: #d0d0d0;
             text-decoration: none;
-            margin-left: 25px;
-            transition: 0.2s;
+
+            margin-left: 30px;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            transition: 0.25s;
         }
 
         nav a:hover {
             color: #55ff55;
         }
 
-        /* Hero */
+        nav a::after {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            bottom: -7px;
+
+            width: 0;
+            height: 2px;
+
+            background: #55ff55;
+
+            transition: 0.25s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
 
         .hero {
-            min-height: 75vh;
+            min-height: 730px;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
             text-align: center;
-            padding: 40px 20px;
+
+            padding: 90px 20px 70px;
+
+            position: relative;
+        }
+
+        /* Green glow behind title */
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 600px;
+            height: 300px;
+
+            background: rgba(70, 255, 90, 0.08);
+
+            filter: blur(100px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
         }
 
         .badge {
-            background: rgba(85, 255, 85, 0.1);
-            border: 1px solid rgba(85, 255, 85, 0.3);
-            color: #55ff55;
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin-bottom: 20px;
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 9px 17px;
+
+            margin-bottom: 25px;
+
+            border-radius: 30px;
+
+            color: #72ff72;
+
+            background: rgba(50, 180, 70, 0.10);
+
+            border: 1px solid rgba(85, 255, 85, 0.35);
+
             font-size: 14px;
+            font-weight: 600;
+
+            box-shadow:
+                0 0 20px rgba(85, 255, 85, 0.08);
+
+            animation: fadeDown 0.8s ease;
+        }
+
+        .badge-dot {
+            width: 9px;
+            height: 9px;
+
+            background: #55ff55;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px #55ff55;
         }
 
         h1 {
-            font-size: clamp(45px, 8vw, 90px);
-            margin-bottom: 10px;
-            text-shadow: 0 0 25px rgba(85, 255, 85, 0.25);
+            position: relative;
+
+            font-size: clamp(48px, 8vw, 92px);
+
+            line-height: 0.95;
+
+            font-weight: 900;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 25px;
+
+            background: linear-gradient(
+                180deg,
+                #ffffff 10%,
+                #d7ffd7 100%
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            text-shadow:
+                0 0 40px rgba(85, 255, 85, 0.15);
+
+            animation: fadeUp 0.9s ease;
         }
 
         .subtitle {
-            color: #bbb;
-            font-size: 18px;
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 35px;
+            position: relative;
+
+            max-width: 650px;
+
+            color: #a9b0aa;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            margin-bottom: 38px;
+
+            animation: fadeUp 1s ease;
         }
 
-        /* IP Box */
+        /* =========================
+           IP BOX
+        ========================== */
 
         .ip-box {
+            position: relative;
+
             display: flex;
             align-items: center;
+
             gap: 10px;
-            background: rgba(0, 0, 0, 0.55);
+
+            padding: 9px;
+
+            min-width: 390px;
+
+            background: rgba(10, 15, 11, 0.85);
+
             border: 1px solid rgba(85, 255, 85, 0.35);
-            padding: 10px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 0 30px rgba(85, 255, 85, 0.07),
+                inset 0 0 20px rgba(85, 255, 85, 0.02);
+
+            backdrop-filter: blur(12px);
+
+            animation: fadeUp 1.1s ease;
         }
 
         .ip {
-            padding: 12px 18px;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            flex: 1;
+
+            padding: 13px 16px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            color: #f1f1f1;
+
+            white-space: nowrap;
         }
 
-        button {
+        .copy-btn {
             border: none;
+
             background: #55ff55;
+
             color: #071007;
-            padding: 13px 20px;
-            border-radius: 8px;
-            font-weight: bold;
+
+            padding: 14px 19px;
+
+            border-radius: 9px;
+
+            font-weight: 800;
+
             cursor: pointer;
-            transition: 0.2s;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 0 20px rgba(85, 255, 85, 0.12);
         }
 
-        button:hover {
+        .copy-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(85, 255, 85, 0.4);
+
+            box-shadow:
+                0 0 30px rgba(85, 255, 85, 0.35);
         }
 
-        /* Status */
-
-        .status {
-            color: #55ff55;
-            font-size: 14px;
+        .copy-btn:active {
+            transform: scale(0.97);
         }
 
-        .dot {
-            display: inline-block;
-            width: 9px;
-            height: 9px;
-            background: #55ff55;
-            border-radius: 50%;
-            margin-right: 7px;
-            box-shadow: 0 0 10px #55ff55;
-        }
+        /* =========================
+           BUTTONS
+        ========================== */
 
-        /* Info */
-
-        .info {
+        .buttons {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 40px 20px 70px;
+
+            gap: 12px;
+
+            margin-top: 18px;
         }
 
-        .card {
-            width: 250px;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            text-align: center;
+        .discord-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 12px 20px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-weight: 700;
+
             transition: 0.25s;
         }
 
+        .discord-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+
+            border-color: rgba(255, 255, 255, 0.25);
+
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+            display: flex;
+
+            align-items: center;
+
+            margin-top: 19px;
+
+            color: #67ff67;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            animation: fadeUp 1.2s ease;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+
+            margin-right: 9px;
+
+            border-radius: 50%;
+
+            background: #55ff55;
+
+            box-shadow:
+                0 0 7px #55ff55,
+                0 0 15px rgba(85, 255, 85, 0.7);
+
+            animation: pulse 1.7s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.45;
+            }
+        }
+
+        /* =========================
+           SERVER INFO
+        ========================== */
+
+        .server-info {
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: -20px auto 60px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            padding: 0 20px;
+        }
+
+        .stat {
+            padding: 22px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 14px;
+
+            transition: 0.3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(85, 255, 85, 0.3);
+
+            background:
+                rgba(85, 255, 85, 0.045);
+        }
+
+        .stat-number {
+            font-size: 21px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8780;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           FEATURE CARDS
+        ========================== */
+
+        .info {
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            padding: 30px 20px 90px;
+        }
+
+        .card {
+            position: relative;
+
+            padding: 30px;
+
+            min-height: 190px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.3s,
+                border-color 0.3s,
+                box-shadow 0.3s;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            top: -80px;
+            right: -80px;
+
+            width: 150px;
+            height: 150px;
+
+            background: rgba(85,255,85,0.07);
+
+            border-radius: 50%;
+
+            filter: blur(25px);
+        }
+
         .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(85, 255, 85, 0.35);
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(85,255,85,0.3);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.3),
+                0 0 25px rgba(85,255,85,0.04);
+        }
+
+        .card-icon {
+            font-size: 30px;
+
+            margin-bottom: 17px;
         }
 
         .card h2 {
+            font-size: 21px;
+
             margin-bottom: 10px;
-            font-size: 20px;
         }
 
         .card p {
-            color: #aaa;
-            line-height: 1.5;
+            color: #929992;
+
+            line-height: 1.6;
+
+            font-size: 14px;
         }
 
-        /* Footer */
+        /* =========================
+           SECTION TITLE
+        ========================== */
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 5px;
+
+            color: #ffffff;
+
+            font-size: 30px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+
+            color: #747b75;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
 
         footer {
             text-align: center;
-            padding: 25px;
-            color: #777;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            padding: 30px 20px;
+
+            color: #606760;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            background:
+                rgba(0,0,0,0.2);
+
+            font-size: 13px;
         }
 
-        @media (max-width: 600px) {
+        footer span {
+            color: #55ff55;
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================== */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 750px) {
+
             nav {
-                padding: 18px 5%;
+                padding: 16px 5%;
             }
 
             nav a {
-                margin-left: 10px;
-                font-size: 14px;
+                margin-left: 15px;
+            }
+
+            .hero {
+                min-height: 680px;
+                padding-top: 70px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .ip-box {
+                min-width: 0;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .server-info {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0 8px;
             }
 
             .ip-box {
                 flex-direction: column;
-                width: 100%;
-                max-width: 350px;
+                padding: 10px;
             }
 
             .ip {
-                font-size: 16px;
+                width: 100%;
+                text-align: center;
+
+                font-size: 14px;
+
+                overflow-x: auto;
             }
 
-            button {
+            .copy-btn {
+                width: 100%;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .discord-btn {
                 width: 100%;
             }
         }
@@ -217,92 +764,255 @@
 
 <body>
 
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
     <nav>
-        <div class="logo">⚔ <span>MyServer</span></div>
+
+        <div class="logo">
+            <span class="logo-icon">⚔️</span>
+            <span>MyServer</span>
+        </div>
 
         <div>
             <a href="#home">Home</a>
             <a href="#about">About</a>
         </div>
+
     </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
 
     <section class="hero" id="home">
 
-        <div class="badge">🟢 Minecraft Server</div>
+        <div class="badge">
+            <span class="badge-dot"></span>
+            Minecraft Server
+        </div>
 
-        <h1>A Fun Minecraft Server!
-        </h1>
+
+        <!-- CHANGE YOUR SERVER NAME HERE -->
+
+        <h1>A Fun, Minecraft Server!</h1>
+
 
         <p class="subtitle">
             Welcome to our Minecraft server!
-            Build, explore, fight, and create unforgettable adventures
-            with your friends.
+            Build, explore, fight, and create unforgettable
+            adventures with your friends.
         </p>
 
+
+        <!-- SERVER IP -->
+
         <div class="ip-box">
+
             <div class="ip" id="serverIP">
                 145.239.149.31:25435
             </div>
 
-            <button onclick="copyIP()">
+            <button class="copy-btn" onclick="copyIP()">
                 📋 Copy IP
             </button>
+
         </div>
+
+
+        <!-- EXTRA BUTTON -->
+
+        <div class="buttons">
+
+            <!-- CHANGE THIS TO YOUR DISCORD INVITE -->
+
+            <a
+                class="discord-btn"
+                href="#"
+                onclick="alert('https://discord.gg/uWjWAek7S')"
+            >
+                💬 Join Discord
+            </a>
+
+        </div>
+
+
+        <!-- STATUS -->
 
         <div class="status">
-            <span class="dot"></span>
+
+            <span class="status-dot"></span>
+
             Server Online
+
         </div>
 
     </section>
 
-    <section class="info" id="about">
 
-        <div class="card">
-            <h2>⛏️ Survival</h2>
-            <p>
-                Explore a huge world, gather resources,
-                build your base and survive.
-            </p>
+    <!-- =========================
+         SERVER STATS
+    ========================== -->
+
+    <section class="server-info">
+
+        <div class="stat">
+
+            <div class="stat-number">
+                👥 5 / 50
+            </div>
+
+            <div class="stat-label">
+                Players Online
+            </div>
+
         </div>
 
-        <div class="card">
-            <h2>👥 Community</h2>
-            <p>
-                Play with friends and meet other
-                Minecraft players.
-            </p>
+
+        <div class="stat">
+
+            <div class="stat-number">
+                🌍 Survival
+            </div>
+
+            <div class="stat-label">
+                Server Mode
+            </div>
+
         </div>
 
-        <div class="card">
-            <h2>⚡ Events</h2>
-            <p>
-                Participate in exciting server events
-                and competitions.
-            </p>
+
+        <div class="stat">
+
+            <div class="stat-number">
+                ⚔️ Java
+            </div>
+
+            <div class="stat-label">
+                Minecraft Edition
+            </div>
+
         </div>
 
     </section>
+
+
+    <!-- =========================
+         ABOUT / FEATURES
+    ========================== -->
+
+    <section id="about">
+
+        <h2 class="section-title">
+            Why play with us?
+        </h2>
+
+        <p class="section-subtitle">
+            Everything you need for a great Minecraft experience.
+        </p>
+
+
+        <section class="info">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⛏️
+                </div>
+
+                <h2>
+                    Survival
+                </h2>
+
+                <p>
+                    Explore the world, gather resources,
+                    build your base and create your own adventure.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h2>
+                    Community
+                </h2>
+
+                <p>
+                    Play with friends, meet new players
+                    and become part of our growing community.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⚡
+                </div>
+
+                <h2>
+                    Events
+                </h2>
+
+                <p>
+                    Take part in exciting events,
+                    challenges and competitions.
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer>
-        © 2026 MyServer • Minecraft Server
+
+        © 2026 <span>MyServer</span> • Minecraft Server
+
     </footer>
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script>
+
         function copyIP() {
-            const ip = document.getElementById("serverIP").innerText;
+
+            const ip =
+                document.getElementById("serverIP").innerText;
 
             navigator.clipboard.writeText(ip);
 
-            const button = document.querySelector("button");
+            const button =
+                document.querySelector(".copy-btn");
 
             button.innerText = "✅ Copied!";
 
             setTimeout(() => {
+
                 button.innerText = "📋 Copy IP";
+
             }, 2000);
+
         }
+
     </script>
 
 </body>
+
 </html>
